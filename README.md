@@ -1,6 +1,8 @@
 # Neha Bhalerao — Portfolio Homepage
 
-A responsive personal portfolio homepage built with Next.js 14, React, TypeScript, Tailwind CSS, and Lucide icons. The visual design uses CSS for subtle transitions rather than heavy animation libraries.
+A responsive personal portfolio homepage built with Next.js 14, React, TypeScript, Tailwind CSS, and Lucide icons. A lightweight Canvas component animates the starfield without extra dependencies; CSS adds the atmospheric lighting and orbital details. Background motion pauses for reduced-motion preferences and when the browser tab is hidden.
+
+The shared navigation includes a keyboard-accessible mobile menu. Portfolio and experience details remain in the App Router page, while the animated background and menu are isolated client components.
 
 ## Run locally
 
