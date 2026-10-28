@@ -12,13 +12,15 @@ import {
   Terminal,
   Workflow,
 } from "lucide-react";
+import SiteHeader from "./components/SiteHeader";
+import UniverseBackground from "./components/UniverseBackground";
 
 const skills = [
   { title: "Backend & APIs", items: "Python · FastAPI · Node.js · REST APIs", icon: Braces },
   { title: "Data & Databases", items: "PostgreSQL · DuckDB · SQL · Redis · PGVector", icon: Database },
   { title: "Frontend", items: "Next.js · React.js · JavaScript", icon: Code2 },
-  { title: "Generative AI", items: "LLMs · RAG · LangChain · AutoGen · Azure OpenAI", icon: BrainCircuit },
-  { title: "Testing & Quality", items: "PyTest · Selenium · Postman · Regression testing", icon: Check },
+  { title: "Generative AI", items: "LLMs · RAG · LangChain · AutoGen · Azure OpenAI · Prompt engineering", icon: BrainCircuit },
+  { title: "Testing & Quality", items: "API testing · PyTest · Selenium · Postman", icon: Check },
   { title: "Engineering", items: "Git · Agile/Scrum · Debugging · CI/CD familiarity", icon: Workflow },
 ];
 
@@ -57,45 +59,37 @@ const projects = [
 
 export default function Home() {
   return (
-    <main>
-      <header className="site-header">
-        <a className="wordmark" href="#home" aria-label="Neha Bhalerao home">
-          NB<span>.</span>
-        </a>
-        <nav className="desktop-nav" aria-label="Main navigation">
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#work">Projects</a>
-          <a href="#experience">Experience</a>
-        </nav>
-        <a className="header-cta" href="mailto:bhaleraoneha56@gmail.com">
-          Let&apos;s talk <ArrowUpRight size={15} />
-        </a>
-      </header>
+    <>
+      <a className="skip-link" href="#main-content">Skip to content</a>
+      <UniverseBackground />
+      <div className="site-shell">
+        <SiteHeader />
+        <main id="main-content">
+          <section className="hero section-wrap" id="home">
+            <div className="hero-copy">
+              <div className="eyebrow"><span className="status-dot" /> SOFTWARE DEVELOPER <span className="eyebrow-divider">/</span> INDIA</div>
+              <h1>Neha<br /><span className="hero-surname">Bhalerao.</span><em>Software developer exploring the space between backend, full-stack &amp; GenAI.</em></h1>
+              <p className="hero-description">
+                I build reliable software across backend systems, full-stack
+                features, and Generative AI—turning complex problems into useful,
+                thoughtful products.
+              </p>
+              <div className="hero-actions">
+                <a className="button button-dark" href="#work">Explore my work <ArrowDownRight size={17} /></a>
+                <a className="text-link" href="mailto:bhaleraoneha56@gmail.com">Get in touch <ArrowUpRight size={15} /></a>
+              </div>
+              <div className="hero-footnote">
+                <span>PYTHON</span><span className="tiny-cross">✳</span><span>BACKEND</span><span className="tiny-cross">✳</span><span>GENAI</span>
+              </div>
+            </div>
 
-      <section className="hero section-wrap" id="home">
-        <div className="hero-copy">
-          <div className="eyebrow"><span className="status-dot" /> SOFTWARE DEVELOPER · INDIA</div>
-          <h1>I build things<br />that <span className="highlight">work</span><span className="period">.</span><br /><em>And keep getting better.</em></h1>
-          <p className="hero-description">
-            I&apos;m Neha — a software developer working across backend systems,
-            full-stack features, and Generative AI. I like turning complex
-            problems into useful, dependable software.
-          </p>
-          <div className="hero-actions">
-            <a className="button button-dark" href="#work">Explore my work <ArrowDownRight size={17} /></a>
-            <a className="text-link" href="mailto:bhaleraoneha56@gmail.com">Get in touch <ArrowUpRight size={15} /></a>
-          </div>
-          <div className="hero-footnote">
-            <span>PYTHON</span><span className="tiny-cross">✳</span><span>BACKEND</span><span className="tiny-cross">✳</span><span>GENAI</span>
-          </div>
-        </div>
-
-        <div className="hero-art" aria-label="Decorative code illustration">
+            <div className="hero-art" aria-hidden="true">
           <div className="art-orbit orbit-one" />
           <div className="art-orbit orbit-two" />
+          <div className="art-orbit orbit-three" />
           <div className="art-spark spark-one">✳</div>
           <div className="art-spark spark-two">✦</div>
+          <div className="planet" />
           <div className="code-card">
             <div className="code-top">
               <div className="window-dots"><i /><i /><i /></div>
@@ -117,11 +111,11 @@ export default function Home() {
           <div className="floating-chip chip-ai"><BrainCircuit size={16} /> Generative AI</div>
           <div className="floating-chip chip-api"><Braces size={16} /> APIs that scale</div>
           <div className="art-caption">CURIOUS BY DEFAULT <span>↗</span></div>
-        </div>
-        <a className="scroll-cue" href="#about"><span /> SCROLL TO EXPLORE</a>
-      </section>
+            </div>
+            <a className="scroll-cue" href="#about"><span /> SCROLL TO EXPLORE</a>
+          </section>
 
-      <section className="intro-band" id="about">
+          <section className="intro-band" id="about">
         <div className="section-wrap intro-inner">
           <div className="section-kicker">01 / A LITTLE ABOUT ME</div>
           <div className="intro-content">
@@ -139,9 +133,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+          </section>
 
-      <section className="section-wrap skills-section" id="skills">
+          <section className="section-wrap skills-section" id="skills">
         <div className="section-heading">
           <div><div className="section-kicker">02 / MY TOOLKIT</div><h2>Tools of the trade<span>.</span></h2></div>
           <p>Practical tools I use to build, connect, test, and improve software.</p>
@@ -155,9 +149,9 @@ export default function Home() {
             </article>
           ))}
         </div>
-      </section>
+          </section>
 
-      <section className="work-section" id="work">
+          <section className="work-section" id="work">
         <div className="section-wrap">
           <div className="section-heading work-heading">
             <div><div className="section-kicker">03 / SELECTED WORK</div><h2>Made with intent<span>.</span></h2></div>
@@ -179,9 +173,9 @@ export default function Home() {
           </div>
           <p className="project-note">Professional work is summarized at a high level; confidential code and internal details are not included.</p>
         </div>
-      </section>
+          </section>
 
-      <section className="section-wrap experience-section" id="experience">
+          <section className="section-wrap experience-section" id="experience">
         <div className="section-heading">
           <div><div className="section-kicker">04 / THE JOURNEY SO FAR</div><h2>Experience that compounds<span>.</span></h2></div>
         </div>
@@ -222,9 +216,9 @@ export default function Home() {
           <div><span className="section-kicker">EDUCATION</span><h3>B.Tech in Computer Science and Engineering</h3><p>Government College of Engineering, Yavatmal · 2021–2024</p></div>
           <strong>8.86 <small>/ 10 CGPA</small></strong>
         </div>
-      </section>
+          </section>
 
-      <section className="contact-section" id="contact">
+          <section className="contact-section" id="contact">
         <div className="section-wrap contact-inner">
           <div className="section-kicker">05 / YOUR TURN</div>
           <h2>Have a good problem?<br /><em>Let&apos;s solve it.</em></h2>
@@ -233,9 +227,9 @@ export default function Home() {
           <div className="contact-email"><Mail size={15} /> bhaleraoneha56@gmail.com</div>
           <div className="contact-decoration">NB<span>.</span></div>
         </div>
-      </section>
+          </section>
 
-      <footer className="site-footer section-wrap">
+          <footer className="site-footer section-wrap">
         <a className="wordmark" href="#home">NB<span>.</span></a>
         <p>Designed with curiosity. Built with care.</p>
         <div className="footer-links">
@@ -244,7 +238,9 @@ export default function Home() {
           <a href="#home" aria-label="Back to top"><ArrowUpRight size={17} /></a>
         </div>
         <span className="copyright">© 2026 NEHA BHALERAO</span>
-      </footer>
-    </main>
+          </footer>
+        </main>
+      </div>
+    </>
   );
 }
