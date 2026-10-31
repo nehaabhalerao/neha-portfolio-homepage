@@ -10,10 +10,10 @@ type Particle = {
   twinkle: number;
   phase: number;
   drift: number;
+  parallax: number;
+  color: "white" | "purple" | "cyan";
 };
 
-const STAR_COUNT = 125;
-const DUST_COUNT = 20;
 const FRAME_INTERVAL = 1000 / 30;
 
 export default function UniverseBackground() {
@@ -31,12 +31,18 @@ export default function UniverseBackground() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const stars: Particle[] = [];
     const dust: Particle[] = [];
+    const starCount = window.innerWidth <= 650 ? 64 : 105;
+    const dustCount = window.innerWidth <= 650 ? 10 : 18;
     let width = 0;
     let height = 0;
     let animationFrame = 0;
     let previousFrame = 0;
     let elapsed = 0;
     let isPageVisible = document.visibilityState === "visible";
+    let isLightTheme = document.documentElement.dataset.theme === "light";
+    let pointerX = 0.5;
+    let pointerY = 0.5;
+    let hasPointer = false;
 
     const createParticle = (isDust: boolean): Particle => ({
       x: Math.random(),
@@ -46,12 +52,14 @@ export default function UniverseBackground() {
       twinkle: Math.random() * 0.65 + 0.15,
       phase: Math.random() * Math.PI * 2,
       drift: isDust ? Math.random() * 5 + 2 : Math.random() * 1.1 + 0.25,
+      parallax: Math.random() * 0.8 + 0.2,
+      color: isDust ? "white" : (["white", "purple", "cyan"] as const)[Math.floor(Math.random() * 3)],
     });
 
-    for (let index = 0; index < STAR_COUNT; index += 1) {
+    for (let index = 0; index < starCount; index += 1) {
       stars.push(createParticle(false));
     }
-    for (let index = 0; index < DUST_COUNT; index += 1) {
+    for (let index = 0; index < dustCount; index += 1) {
       dust.push(createParticle(true));
     }
 
@@ -67,6 +75,15 @@ export default function UniverseBackground() {
       draw(0);
     };
 
+    const getPosition = (particle: Particle) => {
+      const pointerOffsetX = hasPointer ? (pointerX - 0.5) * 22 * particle.parallax : 0;
+      const pointerOffsetY = hasPointer ? (pointerY - 0.5) * 22 * particle.parallax : 0;
+      return {
+        x: particle.x * width + pointerOffsetX,
+        y: particle.y * height + pointerOffsetY,
+      };
+    };
+
     const drawParticles = (particles: Particle[], time: number, move: boolean) => {
       particles.forEach((particle) => {
         if (move) {
@@ -79,18 +96,58 @@ export default function UniverseBackground() {
 
         const opacity =
           particle.alpha *
+          (isLightTheme ? 0.48 : 1) *
           (0.72 + Math.sin(elapsed * particle.twinkle + particle.phase) * 0.28);
+        const { x, y } = getPosition(particle);
+        const color =
+          particle.color === "purple"
+            ? isLightTheme
+              ? "121, 82, 214"
+              : "167, 139, 250"
+            : particle.color === "cyan"
+              ? isLightTheme
+                ? "0, 127, 156"
+                : "72, 221, 245"
+              : isLightTheme
+                ? "92, 102, 127"
+                : "229, 236, 255";
         drawingContext.beginPath();
-        drawingContext.arc(particle.x * width, particle.y * height, particle.radius, 0, Math.PI * 2);
-        drawingContext.fillStyle = `rgba(228, 235, 255, ${opacity})`;
+        drawingContext.arc(x, y, particle.radius, 0, Math.PI * 2);
+        drawingContext.fillStyle = `rgba(${color}, ${opacity})`;
         drawingContext.fill();
       });
+    };
+
+    const drawConnections = () => {
+      const maxDistance = width < 650 ? 75 : 105;
+      for (let first = 0; first < stars.length; first += 1) {
+        const firstPosition = getPosition(stars[first]);
+        for (let second = first + 1; second < stars.length; second += 1) {
+          const secondPosition = getPosition(stars[second]);
+          const distance = Math.hypot(
+            firstPosition.x - secondPosition.x,
+            firstPosition.y - secondPosition.y,
+          );
+          if (distance > maxDistance) {
+            continue;
+          }
+
+          const opacity = (1 - distance / maxDistance) * (isLightTheme ? 0.055 : 0.12);
+          drawingContext.beginPath();
+          drawingContext.moveTo(firstPosition.x, firstPosition.y);
+          drawingContext.lineTo(secondPosition.x, secondPosition.y);
+          drawingContext.strokeStyle = `rgba(${isLightTheme ? "121, 82, 214" : "167, 139, 250"}, ${opacity})`;
+          drawingContext.lineWidth = 0.6;
+          drawingContext.stroke();
+        }
+      }
     };
 
     function draw(delta: number) {
       drawingContext.clearRect(0, 0, width, height);
       const move = !reducedMotion.matches && isPageVisible;
       elapsed += delta / 1000;
+      drawConnections();
       drawParticles(stars, delta / 1000, move);
       drawParticles(dust, delta / 1000, move);
     }
@@ -124,17 +181,41 @@ export default function UniverseBackground() {
       startAnimation();
     };
 
+    const handlePointerMove = (event: PointerEvent) => {
+      pointerX = event.clientX / width;
+      pointerY = event.clientY / height;
+      hasPointer = true;
+    };
+
+    const handlePointerLeave = () => {
+      hasPointer = false;
+    };
+
+    const themeObserver = new MutationObserver(() => {
+      isLightTheme = document.documentElement.dataset.theme === "light";
+      draw(0);
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
     resizeCanvas();
     startAnimation();
     window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerleave", handlePointerLeave);
     document.addEventListener("visibilitychange", handleVisibilityChange);
     reducedMotion.addEventListener("change", startAnimation);
 
     return () => {
       window.cancelAnimationFrame(animationFrame);
       window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerleave", handlePointerLeave);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       reducedMotion.removeEventListener("change", startAnimation);
+      themeObserver.disconnect();
     };
   }, []);
 
