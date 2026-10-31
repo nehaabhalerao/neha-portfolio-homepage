@@ -5,7 +5,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Arial", "Helvetica", "sans-serif"],
+        sans: ["var(--font-inter)", "Arial", "Helvetica", "sans-serif"],
+        display: ["var(--font-space-grotesk)", "sans-serif"],
       },
     },
   },

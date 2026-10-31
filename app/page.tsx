@@ -1,61 +1,21 @@
 import {
   ArrowDownRight,
-  ArrowRight,
   ArrowUpRight,
   Braces,
   BrainCircuit,
-  Check,
   Code2,
-  Database,
+  Github,
+  Linkedin,
   Mail,
-  Sparkles,
   Terminal,
-  Workflow,
 } from "lucide-react";
+import AboutSection from "./components/AboutSection";
+import ContactSection from "./components/ContactSection";
+import ExperienceSection from "./components/ExperienceSection";
+import ProjectsSection from "./components/ProjectsSection";
+import SkillsSection from "./components/SkillsSection";
 import SiteHeader from "./components/SiteHeader";
 import UniverseBackground from "./components/UniverseBackground";
-
-const skills = [
-  { title: "Backend & APIs", items: "Python · FastAPI · Node.js · REST APIs", icon: Braces },
-  { title: "Data & Databases", items: "PostgreSQL · DuckDB · SQL · Redis · PGVector", icon: Database },
-  { title: "Frontend", items: "Next.js · React.js · JavaScript", icon: Code2 },
-  { title: "Generative AI", items: "LLMs · RAG · LangChain · AutoGen · Azure OpenAI · Prompt engineering", icon: BrainCircuit },
-  { title: "Testing & Quality", items: "API testing · PyTest · Selenium · Postman", icon: Check },
-  { title: "Engineering", items: "Git · Agile/Scrum · Debugging · CI/CD familiarity", icon: Workflow },
-];
-
-const projects = [
-  {
-    number: "01",
-    type: "MACHINE LEARNING · AUDIO",
-    title: "Bird Audio Detection",
-    description:
-      "Built an audio-classification system to identify bird species from recordings using MFCC features, spectrograms, and deep-learning models.",
-    stack: ["Python", "TensorFlow", "Librosa", "Flask"],
-    mark: "♪",
-    tone: "project-lime",
-  },
-  {
-    number: "02",
-    type: "FRONTEND · WEB",
-    title: "Come n Shine Website",
-    description:
-      "Developed a responsive React application with reusable components and responsive layouts across devices and browsers.",
-    stack: ["React.js", "JavaScript", "Responsive UI"],
-    mark: "↗",
-    tone: "project-lilac",
-  },
-  {
-    number: "03",
-    type: "GENERATIVE AI · PROFESSIONAL EXPERIENCE",
-    title: "Enterprise GenAI & RAG Workflows",
-    description:
-      "At Allianz Technology, contributed to a GenAI-powered SDLC platform and chatbot workflows involving document processing, prompt management, retrieval, and hybrid search.",
-    stack: ["Python", "FastAPI", "RAG", "LangChain", "PGVector"],
-    mark: "✳",
-    tone: "project-peach",
-  },
-];
 
 export default function Home() {
   return (
@@ -68,7 +28,15 @@ export default function Home() {
           <section className="hero section-wrap" id="home">
             <div className="hero-copy">
               <div className="eyebrow"><span className="status-dot" /> SOFTWARE DEVELOPER <span className="eyebrow-divider">/</span> INDIA</div>
-              <h1>Neha<br /><span className="hero-surname">Bhalerao.</span><em>Software developer exploring the space between backend, full-stack &amp; GenAI.</em></h1>
+              <h1>
+                <span>Building</span>
+                <span className="hero-gradient">intelligent</span>
+                <span className="hero-gradient">digital experiences.</span>
+              </h1>
+              <p className="hero-name">I&apos;m <span>Neha Bhalerao.</span></p>
+              <p className="hero-specialty">
+                Software developer exploring the space between backend, full-stack &amp; GenAI.
+              </p>
               <p className="hero-description">
                 I build reliable software across backend systems, full-stack
                 features, and Generative AI—turning complex problems into useful,
@@ -115,127 +83,23 @@ export default function Home() {
             <a className="scroll-cue" href="#about"><span /> SCROLL TO EXPLORE</a>
           </section>
 
-          <section className="intro-band" id="about">
-        <div className="section-wrap intro-inner">
-          <div className="section-kicker">01 / A LITTLE ABOUT ME</div>
-          <div className="intro-content">
-            <h2>Curiosity is my starting point.<br /><span>Engineering is how I explore it.</span></h2>
-            <p>
-              With 1+ year of professional software development experience, I build
-              REST APIs, backend services, database-driven applications, and
-              full-stack features. My earlier work with enterprise GenAI introduced
-              me to LLMs, retrieval-augmented generation, and AI-powered automation.
-            </p>
-            <div className="about-stats">
-              <div><strong>1+</strong><span>YEAR IN SOFTWARE</span></div>
-              <div><strong>AI +</strong><span>BACKEND FOCUS</span></div>
-              <div><strong>8.86</strong><span>B.TECH CGPA / 10</span></div>
-            </div>
-          </div>
-        </div>
-          </section>
+          <AboutSection />
+          <SkillsSection />
+          <ProjectsSection />
+          <ExperienceSection />
 
-          <section className="section-wrap skills-section" id="skills">
-        <div className="section-heading">
-          <div><div className="section-kicker">02 / MY TOOLKIT</div><h2>Tools of the trade<span>.</span></h2></div>
-          <p>Practical tools I use to build, connect, test, and improve software.</p>
-        </div>
-        <div className="skills-grid">
-          {skills.map(({ title, items, icon: Icon }, index) => (
-            <article className="skill-card" key={title}>
-              <div className="skill-card-top"><span>0{index + 1}</span><Icon size={20} strokeWidth={1.7} /></div>
-              <h3>{title}</h3>
-              <p>{items}</p>
-            </article>
-          ))}
-        </div>
-          </section>
-
-          <section className="work-section" id="work">
-        <div className="section-wrap">
-          <div className="section-heading work-heading">
-            <div><div className="section-kicker">03 / SELECTED WORK</div><h2>Made with intent<span>.</span></h2></div>
-            <p>A mix of hands-on projects and relevant professional engineering experience.</p>
-          </div>
-          <div className="projects-grid">
-            {projects.map((project) => (
-              <article className={`project-card ${project.tone}`} key={project.number}>
-                <div className="project-meta"><span>{project.number} / CASE STUDY</span><Sparkles size={16} /></div>
-                <div className="project-illustration"><span>{project.mark}</span><div className="illustration-ring ring-a" /><div className="illustration-ring ring-b" /></div>
-                <div className="project-copy">
-                  <div className="project-type">{project.type}</div>
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <div className="tag-list">{project.stack.map((tag) => <span key={tag}>{tag}</span>)}</div>
-                </div>
-              </article>
-            ))}
-          </div>
-          <p className="project-note">Professional work is summarized at a high level; confidential code and internal details are not included.</p>
-        </div>
-          </section>
-
-          <section className="section-wrap experience-section" id="experience">
-        <div className="section-heading">
-          <div><div className="section-kicker">04 / THE JOURNEY SO FAR</div><h2>Experience that compounds<span>.</span></h2></div>
-        </div>
-        <div className="timeline">
-          <article className="timeline-item">
-            <div className="timeline-date">JAN 2026 — PRESENT</div>
-            <div className="timeline-marker"><span /></div>
-            <div className="timeline-copy">
-              <div className="timeline-top"><h3>SDE 1</h3><span>01</span></div>
-              <p className="company">Tech Brains Solutions, Inc.</p>
-              <p>Developing REST APIs and backend services, integrating PostgreSQL and DuckDB, building full-stack features with Next.js and React, and testing and debugging application workflows.</p>
-              <div className="tag-list"><span>Node.js</span><span>Python</span><span>FastAPI</span><span>Next.js</span><span>SQL</span></div>
-            </div>
-          </article>
-          <article className="timeline-item">
-            <div className="timeline-date">JAN 2025 — DEC 2025</div>
-            <div className="timeline-marker"><span /></div>
-            <div className="timeline-copy">
-              <div className="timeline-top"><h3>Trainee</h3><span>02</span></div>
-              <p className="company">Allianz Technology</p>
-              <p>Contributed to a GenAI-powered SDLC platform and an enterprise chatbot, supporting document processing, prompt management, RAG pipelines, and hybrid search.</p>
-              <div className="tag-list"><span>Azure OpenAI</span><span>LangChain</span><span>AutoGen</span><span>PGVector</span></div>
-            </div>
-          </article>
-          <article className="timeline-item">
-            <div className="timeline-date">JAN 2024 — SEP 2024</div>
-            <div className="timeline-marker"><span /></div>
-            <div className="timeline-copy">
-              <div className="timeline-top"><h3>Automation Tester Intern</h3><span>03</span></div>
-              <p className="company">Cyber Success, Pune</p>
-              <p>Gained hands-on experience in manual and automation testing, functional and regression testing, defect reporting, and Agile processes.</p>
-              <div className="tag-list"><span>Selenium</span><span>PyTest</span><span>Java</span><span>TestNG</span></div>
-            </div>
-          </article>
-        </div>
-        <div className="education-card">
-          <div className="education-icon"><Code2 size={22} /></div>
-          <div><span className="section-kicker">EDUCATION</span><h3>B.Tech in Computer Science and Engineering</h3><p>Government College of Engineering, Yavatmal · 2021–2024</p></div>
-          <strong>8.86 <small>/ 10 CGPA</small></strong>
-        </div>
-          </section>
-
-          <section className="contact-section" id="contact">
-        <div className="section-wrap contact-inner">
-          <div className="section-kicker">05 / YOUR TURN</div>
-          <h2>Have a good problem?<br /><em>Let&apos;s solve it.</em></h2>
-          <p>Open to connecting with teams building thoughtful software, useful AI tools, and reliable products.</p>
-          <a className="button button-lime" href="mailto:bhaleraoneha56@gmail.com">Say hello <ArrowRight size={17} /></a>
-          <div className="contact-email"><Mail size={15} /> bhaleraoneha56@gmail.com</div>
-          <div className="contact-decoration">NB<span>.</span></div>
-        </div>
-          </section>
+          <ContactSection />
 
           <footer className="site-footer section-wrap">
         <a className="wordmark" href="#home">NB<span>.</span></a>
         <p>Designed with curiosity. Built with care.</p>
         <div className="footer-links">
-          <a href="mailto:bhaleraoneha56@gmail.com" aria-label="Email Neha"><Mail size={17} /></a>
-          <a href="#work" aria-label="Projects"><Code2 size={17} /></a>
-          <a href="#home" aria-label="Back to top"><ArrowUpRight size={17} /></a>
+          <a href="mailto:bhaleraoneha56@gmail.com" aria-label="Email Neha"><Mail aria-hidden="true" size={17} /></a>
+          <a href="https://github.com/nehaabhalerao" aria-label="GitHub" rel="noopener noreferrer" target="_blank"><Github aria-hidden="true" size={17} /></a>
+          <a href="https://www.linkedin.com/in/neha-bhalerao-081619213/" aria-label="LinkedIn" rel="noopener noreferrer" target="_blank"><Linkedin aria-hidden="true" size={17} /></a>
+          <a href="https://leetcode.com/u/neha_bhalerao/" aria-label="LeetCode" rel="noopener noreferrer" target="_blank"><Code2 aria-hidden="true" size={17} /></a>
+          <a href="#work" aria-label="Projects"><Code2 aria-hidden="true" size={17} /></a>
+          <a href="#home" aria-label="Back to top"><ArrowUpRight aria-hidden="true" size={17} /></a>
         </div>
         <span className="copyright">© 2026 NEHA BHALERAO</span>
           </footer>
